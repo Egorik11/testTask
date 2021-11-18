@@ -1,18 +1,56 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/js/main.js":
-/*!************************!*\
-  !*** ./src/js/main.js ***!
-  \************************/
+/***/ "./src/js/components/comments.js":
+/*!***************************************!*\
+  !*** ./src/js/components/comments.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+function showComments() {
+  const wrapperComments = document.querySelector(".wrapper_comments");
+  const getRequest = __webpack_require__(/*! ./request */ "./src/js/components/request.js");
+  getRequest().then((data) => {
+    data.forEach(el => {
+      wrapperComments.innerHTML += `<div class="card">
+      <div class="card-body">
+        ${el.text}
+      </div>
+    </div>`
+    });
+  });
+  
+}
+module.exports = showComments;
+
+
+/***/ }),
+
+/***/ "./src/js/components/request.js":
+/*!**************************************!*\
+  !*** ./src/js/components/request.js ***!
+  \**************************************/
 /***/ ((module) => {
 
-function hy() {
-  this.hello = () => {
-    console.log("hi");
-  };
+function getRequest() {
+  // const url = "https://jordan.ashton.fashion/api/goods/30/comments";
+  // const response = await fetch(url);
+  // if (response.status === 200) {
+  //   const data = await response.json();
+  //   return data.data
+  // }
+
+  const array = []
+  fetch('https://jordan.ashton.fashion/api/goods/30/comments')
+  .then(response => response.json())
+  .then(data =>data.data.forEach(el => {
+    array.push(el);
+  }))
+    return array;
 }
- module.exports = hy;
+
+
+module.exports = getRequest; 
 
 /***/ })
 
@@ -49,10 +87,10 @@ var __webpack_exports__ = {};
 /*!**************************!*\
   !*** ./src/js/script.js ***!
   \**************************/
-const myModule = __webpack_require__(/*! ./main */ "./src/js/main.js")
-const myModuleInstance = new myModule();
-
-myModuleInstance.hello();
+window.addEventListener("DOMContentLoaded", () => {
+  const show = __webpack_require__(/*! ./components/comments */ "./src/js/components/comments.js")
+  show()
+});
 })();
 
 /******/ })()

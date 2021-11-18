@@ -1,4 +1,4 @@
-const myModule = require("./main")
-const myModuleInstance = new myModule();
-
-myModuleInstance.hello();
+window.addEventListener("DOMContentLoaded", () => {
+  const show = require("./components/comments")
+  show()
+});
